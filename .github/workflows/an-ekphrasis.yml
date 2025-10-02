@@ -5,7 +5,7 @@ on:
   repository_dispatch: # API trigger
     types: [AN-eKphrasIs]
   schedule:
-    - cron: '45 14 * * *' # Default schedule - 15:00 UTC (23:00 Taipei Time)
+    - cron: '51 9 * * *' # Default schedule - 15:00 UTC (23:00 Taipei Time)
 
 jobs:
   run_anki_review:
