@@ -8,7 +8,7 @@ on:
     - cron: '51 9 * * *' # Default schedule - 15:00 UTC (23:00 Taipei Time)
 
 jobs:
-  run_anki_review:
+  rAN_eKphrasIs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -25,7 +25,7 @@ jobs:
           pip install -r requirements.txt
           pip install jupyter nbconvert
 
-      - name: Run Anki Review Notebook
+      - name: Run Auto-Web
         env:
           ANKI_ACCOUNT: ${{ secrets.ANKI_ACCOUNT }}
           ANKI_PASSWORD: ${{ secrets.ANKI_PASSWORD }}
