@@ -1,4 +1,4 @@
-function scheduleAnkiReview() {
+function schedule() {
   // Generate random hour between 12-23 (noon to 11pm) in Taipei time
   const randomHour = Math.floor(Math.random() * 12) + 12;
   const randomMinute = Math.floor(Math.random() * 60);
