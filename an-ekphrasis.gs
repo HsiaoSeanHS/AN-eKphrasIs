@@ -26,11 +26,7 @@ function schedule() {
   const githubToken =
     PropertiesService.getScriptProperties().getProperty("GITHUB_TOKEN");
 
-  // Option 1: Update the workflow file directly with new cron schedule
   updateWorkflowFile(owner, repo, workflow_id, cronExpression, githubToken);
-
-  // Option 2: Trigger repository_dispatch event
-  // triggerRepositoryDispatch(owner, repo, githubToken, formattedTime);
 
   // Record the scheduled time
   const now = new Date();
@@ -46,8 +42,8 @@ function schedule() {
         spreadsheet.getSheets()[0];
       sheet.appendRow([
         now,
+        `${utcHour}:${randomMinute.toString().padStart(2, "0")}`,
         formattedTime,
-        `UTC: ${utcHour}:${randomMinute.toString().padStart(2, "0")}`,
       ]);
     } catch (error) {
       console.error("Error logging to spreadsheet:", error);
@@ -159,30 +155,3 @@ function updateWorkflowFile(owner, repo, workflow_id, cronExpression, token) {
     return false;
   }
 }
-
-// function triggerRepositoryDispatch(owner, repo, token, scheduledTime) {
-//   try {
-//     const url = `https://api.github.com/repos/${owner}/${repo}/dispatches`;
-//     const options = {
-//       method: "post",
-//       headers: {
-//         Authorization: `token ${token}`,
-//         Accept: "application/vnd.github.v3+json",
-//       },
-//       payload: JSON.stringify({
-//         event_type: "schedule_anki_review",
-//         client_payload: {
-//           scheduled_time: scheduledTime,
-//         },
-//       }),
-//       muteHttpExceptions: true,
-//     };
-
-//     const response = UrlFetchApp.fetch(url, options);
-//     console.log("Repository dispatch triggered:", response.getResponseCode());
-//     return true;
-//   } catch (error) {
-//     console.error("Error triggering repository dispatch:", error);
-//     return false;
-//   }
-// }
