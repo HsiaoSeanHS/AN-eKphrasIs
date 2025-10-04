@@ -19,6 +19,9 @@ function schedule() {
     `Generated random time: ${formattedTime} Taipei time (${cronExpression} UTC)`
   );
 
+  // Send Telegram notification
+  sendTelegramNotification(formattedTime);
+
   // GitHub repository details
   const owner = "HsiaoSeanHS";
   const repo = "AN-eKphrasIs";
@@ -152,6 +155,58 @@ function updateWorkflowFile(owner, repo, workflow_id, cronExpression, token) {
     return true;
   } catch (error) {
     console.error("Error updating workflow file:", error);
+    return false;
+  }
+}
+
+function sendTelegramNotification(taipeiTime) {
+  try {
+    // Get Telegram bot token and chat ID from script properties
+    const botToken =
+      PropertiesService.getScriptProperties().getProperty("TELEGRAM_BOT_TOKEN");
+    const chatId =
+      PropertiesService.getScriptProperties().getProperty("TELEGRAM_CHAT_ID");
+
+    if (!botToken || !chatId) {
+      console.log(
+        "Telegram bot token or chat ID not configured. Skipping notification."
+      );
+      return false;
+    }
+
+    // Create the message
+    const message = `Today will start at ${taipeiTime}`;
+
+    // Send the notification
+    const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    const payload = {
+      chat_id: chatId,
+      text: message,
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true,
+    };
+
+    const response = UrlFetchApp.fetch(telegramUrl, options);
+    const responseData = JSON.parse(response.getContentText());
+
+    if (responseData.ok) {
+      console.log("Telegram notification sent successfully");
+      return true;
+    } else {
+      console.error("Telegram notification failed:", responseData.description);
+      return false;
+    }
+  } catch (error) {
+    console.error("Error sending Telegram notification:", error);
     return false;
   }
 }
