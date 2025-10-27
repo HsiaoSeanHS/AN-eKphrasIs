@@ -175,7 +175,8 @@ function sendTelegramNotification(taipeiTime) {
     }
 
     // Create the message
-    const message = `Today will start at ${taipeiTime}`;
+    // const message = `Today will start at ${taipeiTime}`;
+    const message = `${taipeiTime}`;
 
     // Send the notification
     const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
