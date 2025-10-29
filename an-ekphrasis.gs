@@ -1,6 +1,6 @@
 function schedule() {
-  // Generate random hour between 12-23 (noon to 11pm) in Taipei time
-  const randomHour = Math.floor(Math.random() * 12) + 12;
+  // Generate random hour between 12-23 (noon to 22:59) in Taipei time
+  const randomHour = Math.floor(Math.random() * 11) + 12;
   const randomMinute = Math.floor(Math.random() * 60);
 
   // Format times for display and cron syntax
