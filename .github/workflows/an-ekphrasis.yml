@@ -5,7 +5,7 @@ on:
   repository_dispatch: # API trigger
     types: [AN-eKphrasIs]
   schedule:
-    - cron: '25 4 * * *' # MM HH * * * (UTC+0) -> +8h(UTC+8)
+    - cron: '57 8 * * *' # MM HH * * * (UTC+0) -> +8h(UTC+8)
 
 jobs:
   rAN_eKphrasIs:
